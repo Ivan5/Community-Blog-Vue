@@ -1,7 +1,7 @@
 <template lang="html">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 <div class="container">
-  <a class="navbar-brand" href="#">Community-Blog</a>
+  <router-link class="navbar-brand" to="/">Community-Blog</router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -18,7 +18,7 @@
           Hey {{authUser.name}}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Logout</a>
+          <a class="dropdown-item" @click="logout()" href="#">Logout</a>
         </div>
       </li>
     </ul>
@@ -36,6 +36,13 @@ export default {
     authUser(){
       return this.$root.auth.user
     },
+  },
+  methods:{
+    logout(){
+      localStorage.removeItem('auth');
+      this.$root.auth = {};
+      this.$noty.success('Successfully logout')
+    }
   }
 }
 </script>

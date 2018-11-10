@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="form-group text-center">
-            <button type="submit" class="btn btn-success btn-block" @click="loginUser()">Login</button>
+            <button :disabled="loading" type="submit" class="btn btn-success btn-block" @click="loginUser()"><i class="fas fa-spin fa-spinner" v-if="loading"></i>{{ loading ? '' : 'Login'}}</button>
           </div>
         </div>
       </div>
@@ -33,19 +33,25 @@ export default {
     return {
       email:'',
       password:'',
-      errors: {}
+      errors: {},
+      loading: false
     }
   },
   methods:{
     loginUser(){
+      this.loading = true;
       axios.post('https://react-blog-api.bahdcasts.com/api/auth/login',{
         email: this.email,
         password: this.password
       }).then((response) => {
+        this.loading = false;
         this.$root.auth = response.data.data
         localStorage.setItem('auth', JSON.stringify(response.data.data))
-        this.$router.push('home');
+        this.$noty.success('Successfully logged in')
+        this.$router.push('/');
       }).catch(({response}) => {
+        this.loading = false;
+        this.$noty.error('Ooops something went wrong')
         if(response.status === 401){
           this.errors = {
             email: ["These credentials do not match our records"]
