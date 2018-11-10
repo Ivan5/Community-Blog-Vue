@@ -3,7 +3,11 @@ import App from './App.vue'
 import router from './router'
 Vue.config.productionTip = false
 
+const authData = localStorage.getItem("auth");
 new Vue({
+  data:{
+    auth:authData ? JSON.parse(authData) : {}
+  },
   router,
   render: h => h(App),
 }).$mount('#app')

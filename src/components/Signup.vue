@@ -38,10 +38,13 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password
-      }).then(response => {
-        console.log(response);
+      }).then((response) => {
+        localStorage.setItem('auth', JSON.stringify(response.data.data))
+        this.$root.auth = response.data.data;
+
+        this.$router.push('home');
       }).catch((response) => {
-        console.log(response);
+        //console.log(response);
       })
     }
   }

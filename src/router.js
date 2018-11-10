@@ -3,7 +3,7 @@ import Router from 'vue-router';
 
 import Login from '@/components/Login';
 import Signup from '@/components/Signup';
-
+import Home from '@/components/Home';
 Vue.use(Router)
 
 
@@ -16,6 +16,10 @@ const router = new Router({
     {
       path:'/signup',
       component: Signup
+    },
+    {
+      path:'/home',
+      component: Home
     }
   ]
 })
