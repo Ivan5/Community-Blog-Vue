@@ -5,13 +5,22 @@
         <div class="card-body">
           <h3 class="text-center my-4">Signup</h3>
           <div class="form-group">
-            <input type="text" placeholder="Username" class="form-control" v-model="name">
+            <input type="text" placeholder="Username" class="form-control" v-model="name" v-bind:class="{ 'is-invalid':errors.name, 'is-valid': !errors.name && this.submited} ">
+            <div class="errors" v-if="errors.name">
+              <small class="text-danger" v-for="error in errors.name" :key="error">{{error}}</small>
+            </div>
           </div>
           <div class="form-group">
-            <input type="text" placeholder="Emial" class="form-control" v-model="email">
+            <input type="text" placeholder="Emial" class="form-control" v-model="email" v-bind:class="{ 'is-invalid':errors.email, 'is-valid': !errors.name && this.submited}">
+            <div class="errors" v-if="errors.email">
+              <small class="text-danger" v-for="error in errors.email" :key="error">{{error}}</small>
+            </div>
           </div>
           <div class="form-group">
-            <input type="password" placeholder="Password" class="form-control" v-model="password">
+            <input type="password" placeholder="Password" class="form-control" v-model="password" v-bind:class="{ 'is-invalid':errors.password, 'is-valid': !errors.name && this.submited}">
+            <div class="errors" v-if="errors.password">
+              <small class="text-danger" v-for="error in errors.password" :key="error">{{error}}</small>
+            </div>
           </div>
           <div class="form-group text-center">
             <button type="submit" class="btn btn-success btn-block" @click="registerUser()">Signup</button>
@@ -29,7 +38,9 @@ export default {
     return {
       name:'',
       email:'',
-      password:''
+      password:'',
+      errors:{},
+      submited: false
     }
   },
   methods:{
@@ -39,12 +50,14 @@ export default {
         email: this.email,
         password: this.password
       }).then((response) => {
+        this.submited = true
         localStorage.setItem('auth', JSON.stringify(response.data.data))
         this.$root.auth = response.data.data;
 
         this.$router.push('home');
-      }).catch((response) => {
-        //console.log(response);
+      }).catch(({response}) => {
+        this.submited = true
+        this.errors = response.data
       })
     }
   }
