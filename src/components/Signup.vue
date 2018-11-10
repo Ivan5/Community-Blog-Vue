@@ -23,7 +23,7 @@
             </div>
           </div>
           <div class="form-group text-center">
-            <button type="submit" class="btn btn-success btn-block" @click="registerUser()">Signup</button>
+            <button type="submit" class="btn btn-success btn-block" @click="registerUser()" :disabled="loading"><i class="fas fa-spin fa-spinner" v-if="loading"></i>{{ loading ? '' : 'Signup'}}</button>
           </div>
         </div>
       </div>
@@ -40,22 +40,26 @@ export default {
       email:'',
       password:'',
       errors:{},
-      submited: false
+      submited: false,
+      loading:false
     }
   },
   methods:{
     registerUser(){
+      this.loading = true;
       axios.post('https://react-blog-api.bahdcasts.com/api/auth/register', {
         name: this.name,
         email: this.email,
         password: this.password
       }).then((response) => {
+        this.loading = false;
         this.submited = true
         localStorage.setItem('auth', JSON.stringify(response.data.data))
         this.$root.auth = response.data.data;
 
         this.$router.push('home');
       }).catch(({response}) => {
+        this.loading = false;
         this.submited = true
         this.errors = response.data
       })
