@@ -4,8 +4,8 @@
       {{article.title}}
     </div>
     <div class="card-body">
-      <p class="my-3">{{ article.content.substring(0,200) }}</p>
-      <button class="btn btn-primary">Read more..</button>
+      <div class="my-3" v-html="article.content.substring(0,200)"></div>
+      <router-link class="btn btn-primary" :to="`/article/${article.id}`">Read more..</router-link>
     </div>
   </div>
 </template>
