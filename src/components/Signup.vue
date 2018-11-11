@@ -33,7 +33,16 @@
 
 <script>
 import axios from 'axios';
+import config from '@/config'
 export default {
+  mounted(){
+    if(localStorage.getItem('auth')){
+      this.$router.push('/');
+    }else{
+      this.$router.push('/signup');
+    }
+
+  },
   data(){
     return {
       name:'',
@@ -47,7 +56,7 @@ export default {
   methods:{
     registerUser(){
       this.loading = true;
-      axios.post('https://react-blog-api.bahdcasts.com/api/auth/register', {
+      axios.post(`${config.apiUrl}/auth/register`, {
         name: this.name,
         email: this.email,
         password: this.password

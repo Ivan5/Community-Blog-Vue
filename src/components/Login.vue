@@ -27,8 +27,16 @@
 
 <script>
 import axios from 'axios';
-
+import config from '@/config'
 export default {
+  mounted(){
+    if(localStorage.getItem('auth')){
+      this.$router.push('/');
+    }else{
+      this.$router.push('/login');
+    }
+
+  },
   data(){
     return {
       email:'',
@@ -40,7 +48,7 @@ export default {
   methods:{
     loginUser(){
       this.loading = true;
-      axios.post('https://react-blog-api.bahdcasts.com/api/auth/login',{
+      axios.post(`${config.apiUrl}/auth/login`,{
         email: this.email,
         password: this.password
       }).then((response) => {
