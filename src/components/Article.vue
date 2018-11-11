@@ -1,16 +1,18 @@
 <template lang="html">
   <div class="card mt-4">
-    <div class="card-header">
-      Title
+    <div class="card-header font-weight-bold">
+      {{article.title}}
     </div>
     <div class="card-body">
-      Content
+      <p class="my-3">{{ article.content.substring(0,200) }}</p>
+      <button class="btn btn-primary">Read more..</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props:['article']
 }
 </script>
 

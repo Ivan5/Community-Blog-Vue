@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="row">
     <div class="col-sm-8 offset-2"v-for="article in articles.data" :key="article.id" v-if="articles.data">
-      <Article />
+      <Article :article="article"/>
     </div>
   </div>
 </template>
