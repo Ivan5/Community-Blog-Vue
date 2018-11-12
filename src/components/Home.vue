@@ -1,9 +1,18 @@
 <template lang="html">
-  <div class="row">
-    <div class="col-sm-8 offset-2"v-for="article in articles.data" :key="article.id" v-if="articles.data">
-      <Article :article="article"/>
+  <div class="mt-4">
+    <div class="d-flex justify-content-between">
+      <button @click="getPrevArticles()" class="btn btn-warning" :disable="articles.prev_page_url === null">Prev Page</button>
+      <button @click="getNextArticles()" class="btn btn-warning" :disable="articles.next_page_url === null">Next Page</button>
     </div>
-  </div>
+    <div class="row"  v-if="!loading">
+        <div class="col-sm-8 offset-2" v-for="article in articles.data" :key="article.id" >
+          <Article :article="article"/>
+        </div>
+    </div>
+      <div class="loader  text-center" v-else>
+        <i class="fas fa-5x fa-spin fa-spinner"></i>
+      </div>
+    </div>
 </template>
 
 <script>
@@ -19,18 +28,30 @@ export default {
   },
   data(){
     return {
-      articles: {}
+      articles: {},
+      loading:true
     }
   },
   methods:{
-    getArticles(){
-      axios.get(`${config.apiUrl}/articles`).then(response => {
+    getArticles(url = `${config.apiUrl}/articles`){
+      this.loading = true;
+      axios.get(url).then(response => {
+        this.loading = false;
         this.articles = response.data.data;
       })
+    },
+    getNextArticles(){
+      this.getArticles(this.articles.next_page_url);
+    },
+    getPrevArticles(){
+      this.getNextArticles(this.articles.prev_page_url)
     }
   }
 }
 </script>
 
 <style lang="css">
+.btn-warning{
+  color:#fff;
+}
 </style>
