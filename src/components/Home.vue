@@ -10,7 +10,7 @@
         </div>
     </div>
       <div class="loader  text-center" v-else>
-        <i class="fas fa-5x fa-spin fa-spinner"></i>
+        <i class="fas fa-3x fa-spin fa-spinner"></i>
       </div>
     </div>
 </template>

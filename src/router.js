@@ -5,6 +5,7 @@ import Login from '@/components/Login';
 import Signup from '@/components/Signup';
 import Home from '@/components/Home';
 import ShowArticle from '@/components/ShowArticle';
+import CreateArticle from '@/components/CreateArticle';
 
 Vue.use(Router)
 
@@ -23,6 +24,10 @@ const router = new Router({
     {
       path:'/',
       component: Home
+    },
+    {
+      path:'/article/create',
+      component: CreateArticle
     },
     {
       path:'/article/:id',
